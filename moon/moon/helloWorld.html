@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>hhhhhhhhhhh</title>
+    <link href="build/cesium/widgets/widgets.css" rel="stylesheet" />
+    <style>
+
+        /*@import url(Build/Cesium/Widgets/widgets.css);*/
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <script src="Build/Cesium/Cesium.js"></script>
+    <script src="jquery-3.4.1.js"></script>
+    <!--<script defer src="show3DTiles.js"></script>-->
+    <div id="cesiumContainer"></div>
+    <script>
+
+
+//ion key
+Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJlZGEzYzk3Yi02ZmZmLTRjODUtYmUxYS0wZDc5OTc4MTRmNGIiLCJpZCI6MjYwOTMsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1ODcyMDU0OTh9.wqz5wWBCGA5kJdc0h14w582H4Z8HjXHudzVJZIloHBk';
+
+        // Clem_UVVIS_FeO_Clr_Global_152ppd tiles (RESTful)
+        var clem = new Cesium.WebMapTileServiceImageryProvider({
+            url: "https://trek.nasa.gov/tiles/Moon/EQ/LRO_LOLA_ClrShade_Global_128ppd_v04/1.0.0//{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
+            layer: "LRO_LOLA_ClrShade_Global_128ppd_v04",
+            style: "default",
+            format: "image/png",
+            tileMatrixSetID: "default028mm",
+            maximumLevel: 6,
+            tilingScheme: new Cesium.GeographicTilingScheme(),
+            credit: new Cesium.Credit("Clem_UVVIS_FeO_Clr_Global_152ppd"),
+        });
+
+
+        var terrainModels = [];
+
+        // 1.LRO LOLA DEM, ColorHillshade v6
+        var LRO_LOLA_ClrShade_Global_256ppd_v06 = new Cesium.ProviderViewModel({
+            name: '月球表面彩色山体阴影',
+            iconUrl: Cesium.buildModuleUrl('Widgets/Images/Image/Global_256ppd_v06.png'),
+            tooltip: '月球表面彩色山体阴影',
+            creationFunction: function () {
+                return new Cesium.CesiumTerrainProvider({
+                    url: 'http://localhost:8086/MoonDEM2',
+
+                    requestVertexNormals: true
+                })
+            }
+        });
+        
+        terrainModels.push(LRO_LOLA_ClrShade_Global_256ppd_v06);
+
+        // 初始化Viewer时，直接加载对应额imageryProvider
+        var viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false,
+            imageryProvider: clem,
+            baseLayerPicker: true,
+            terrainProviderViewModels: terrainModels,
+            terrainExaggeration:3
+        });
+
+
+
+       
+
+
+
+    </script>
+</body>
+</html>

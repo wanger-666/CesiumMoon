@@ -1,0 +1,457 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>hhhhhhhhhhh</title>
+    <link href="build/cesium/widgets/widgets.css" rel="stylesheet" />
+    <style>
+
+        /*@import url(Build/Cesium/Widgets/widgets.css);*/
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <script src="Build/Cesium/Cesium.js"></script>
+    <script src="jquery-3.4.1.js"></script>
+    <div id="cesiumContainer"></div>
+    <script>
+
+
+        //ion key
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJlZGEzYzk3Yi02ZmZmLTRjODUtYmUxYS0wZDc5OTc4MTRmNGIiLCJpZCI6MjYwOTMsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1ODcyMDU0OTh9.wqz5wWBCGA5kJdc0h14w582H4Z8HjXHudzVJZIloHBk';
+
+        var providerViewModels = [];
+
+        // 1.LRO LOLA DEM, ColorHillshade v6
+        var LRO_LOLA_ClrShade_Global_256ppd_v06 = new Cesium.ProviderViewModel({
+            name: '月球表面彩色山体阴影',
+            iconUrl: Cesium.buildModuleUrl('Widgets/Images/Image/Global_256ppd_v06.png'),
+            tooltip: '月球表面彩色山体阴影',
+            creationFunction: function () {
+                return new Cesium.WebMapTileServiceImageryProvider({
+                    url: "https://trek.nasa.gov/tiles/Moon/EQ/LRO_LOLA_ClrShade_Global_256ppd_v06/1.0.0//{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
+                    layer: "LRO_LOLA_ClrShade_Global_256ppd_v06",
+                    style: "default",
+                    format: "image/png",
+                    tileMatrixSetID: "default028mm",
+                    maximumLevel: 6,
+                    tilingScheme: new Cesium.GeographicTilingScheme(),
+                    credit: new Cesium.Credit("LRO_LOLA_ClrShade_Global_256ppd_v06"),
+                });
+            }
+        });
+        
+        providerViewModels.push(LRO_LOLA_ClrShade_Global_256ppd_v06);
+
+        //2.LO HR/MR Cam and Clementine UVVIS Hybrid Image Mosaic
+        var ClemLO_Mosaic_Global_512ppd_v02 = new Cesium.ProviderViewModel({
+            name: '月球灰度图',
+            iconUrl: Cesium.buildModuleUrl('Widgets/Images/Image/ClemLO_Mosaic_Global_512ppd_v02-120.png'),
+            tooltip: '月球灰度图',
+            creationFunction: function () {
+                return new Cesium.WebMapTileServiceImageryProvider({
+                    url: "https://trek.nasa.gov/tiles/Moon/EQ/ClemLO_Mosaic_Global_512ppd_v02/1.0.0//{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
+                    layer: "ClemLO_Mosaic_Global_512ppd_v02",
+                    style: "default",
+                    format: "image/png",
+                    tileMatrixSetID: "default028mm",
+                    maximumLevel: 6,
+                    tilingScheme: new Cesium.GeographicTilingScheme(),
+                    credit: new Cesium.Credit("ClemLO_Mosaic_Global_512ppd_v02"),
+                });
+            }
+        });
+
+        providerViewModels.push(ClemLO_Mosaic_Global_512ppd_v02);
+
+        //3.LRO WAC Mosaic v2
+        var LRO_WAC_Mosaic_Global_303ppd = new Cesium.ProviderViewModel({
+            name: 'LROC月球灰度图',
+            iconUrl: Cesium.buildModuleUrl('Widgets/Images/Image/303ppd_v02.png'),
+            tooltip: 'LROC月球灰度图',
+            creationFunction: function () {
+                return new Cesium.WebMapTileServiceImageryProvider({
+                    url: "https://trek.nasa.gov/tiles/Moon/EQ/LRO_WAC_Mosaic_Global_303ppd_v02/1.0.0//{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
+                    layer: "LRO_WAC_Mosaic_Global_303ppd",
+                    style: "default",
+                    format: "image/png",
+                    tileMatrixSetID: "default028mm",
+                    maximumLevel: 6,
+                    tilingScheme: new Cesium.GeographicTilingScheme(),
+                    credit: new Cesium.Credit("LRO_WAC_Mosaic_Global_303ppd"),
+                });
+            }
+        });
+
+        providerViewModels.push(LRO_WAC_Mosaic_Global_303ppd);
+
+        //4.LRO LOLA DEM, Hillshade
+        var LRO_LOLA_Shade_Global_256ppd_v06 = new Cesium.ProviderViewModel({
+            name: '月球表面山体阴影',
+            iconUrl: Cesium.buildModuleUrl('Widgets/Images/Image/HGlobal_256ppd_v06.png'),
+            tooltip: '月球表面山体阴影',
+            creationFunction: function () {
+                return new Cesium.WebMapTileServiceImageryProvider({
+                    url: "https://trek.nasa.gov/tiles/Moon/EQ/LRO_LOLA_Shade_Global_256ppd_v06/1.0.0//{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
+                    layer: "LRO_LOLA_Shade_Global_256ppd_v06",
+                    style: "default",
+                    format: "image/png",
+                    tileMatrixSetID: "default028mm",
+                    maximumLevel: 6,
+                    tilingScheme: new Cesium.GeographicTilingScheme(),
+                    credit: new Cesium.Credit("LRO_LOLA_Shade_Global_256ppd_v06"),
+                });
+            }
+        });
+
+        providerViewModels.push(LRO_LOLA_Shade_Global_256ppd_v06);
+
+        //5.Kaguya TC Geologic Map
+        var Unified_Geologic_Map_of_the_Moon_RASTER = new Cesium.ProviderViewModel({
+            name: '月球地质图',
+            iconUrl: Cesium.buildModuleUrl('Widgets/Images/Image/Unified_Geologic_Map.png'),
+            tooltip: '月球地质图',
+            creationFunction: function () {
+                return new Cesium.WebMapTileServiceImageryProvider({
+                    url: "https://trek.nasa.gov/tiles/Moon/EQ/Unified_Geologic_Map_of_the_Moon_RASTER/1.0.0//{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
+                    layer: "Unified_Geologic_Map_of_the_Moon_RASTER",
+                    style: "default",
+                    format: "image/png",
+                    tileMatrixSetID: "default028mm",
+                    maximumLevel: 6,
+                    tilingScheme: new Cesium.GeographicTilingScheme(),
+                    credit: new Cesium.Credit("Unified_Geologic_Map_of_the_Moon_RASTER"),
+                });
+            }
+        });
+
+        providerViewModels.push(Unified_Geologic_Map_of_the_Moon_RASTER);
+
+        //6.GRAIL LGRS, Geoid Heights L660
+        var gggrx_1200a_geoid_l660 = new Cesium.ProviderViewModel({
+            name: '月球重力场大地水准面高度',
+            iconUrl: Cesium.buildModuleUrl('Widgets/Images/Image/l660.png'),
+            tooltip: '月球重力场大地水准面高度',
+            creationFunction: function () {
+                return new Cesium.WebMapTileServiceImageryProvider({
+                    url: "https://trek.nasa.gov/tiles/Moon/EQ/gggrx_1200a_geoid_l660.eq/1.0.0//{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
+                    layer: "gggrx_1200a_geoid_l660.eq",
+                    style: "default",
+                    format: "image/png",
+                    tileMatrixSetID: "default028mm",
+                    maximumLevel: 6,
+                    tilingScheme: new Cesium.GeographicTilingScheme(),
+                    credit: new Cesium.Credit("gggrx_1200a_geoid_l660.eq"),
+                });
+            }
+        });
+
+        providerViewModels.push(gggrx_1200a_geoid_l660);
+
+        //7.GRAIL LGRS, Bouguer Disturbances L420
+        var gggrx_1200a_boug_l420 = new Cesium.ProviderViewModel({
+            name: '月球重力场布格扰动',
+            iconUrl: Cesium.buildModuleUrl('Widgets/Images/Image/l420.png'),
+            tooltip: '月球重力场布格扰动',
+            creationFunction: function () {
+                return new Cesium.WebMapTileServiceImageryProvider({
+                    url: "https://trek.nasa.gov/tiles/Moon/EQ/gggrx_1200a_boug_l420.eq/1.0.0//{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
+                    layer: "gggrx_1200a_boug_l420.eq",
+                    style: "default",
+                    format: "image/png",
+                    tileMatrixSetID: "default028mm",
+                    maximumLevel: 6,
+                    tilingScheme: new Cesium.GeographicTilingScheme(),
+                    credit: new Cesium.Credit("gggrx_1200a_boug_l420.eq"),
+                });
+            }
+        });
+        providerViewModels.push(gggrx_1200a_boug_l420);
+
+        //8.GRAIL LGRS, Gravity Anomalies L180
+        var gggrx_1200a_anom_l180 = new Cesium.ProviderViewModel({
+            name: '月球重力场重力异常图',
+            iconUrl: Cesium.buildModuleUrl('Widgets/Images/Image/l180.png'),
+            tooltip: '月球重力场重力异常图',
+            creationFunction: function () {
+                return new Cesium.WebMapTileServiceImageryProvider({
+                    url: "https://trek.nasa.gov/tiles/Moon/EQ/gggrx_1200a_anom_l180.eq/1.0.0//{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
+                    layer: "gggrx_1200a_anom_l180.eq",
+                    style: "default",
+                    format: "image/png",
+                    tileMatrixSetID: "default028mm",
+                    maximumLevel: 6,
+                    tilingScheme: new Cesium.GeographicTilingScheme(),
+                    credit: new Cesium.Credit("gggrx_1200a_anom_l180.eq"),
+                });
+            }
+        });
+        providerViewModels.push(gggrx_1200a_anom_l180);
+
+
+        //9.LOLA Slope 16ppd, Colorized
+        var LRO_LOLA_ClrSlope_Global_16ppd = new Cesium.ProviderViewModel({
+            name: '月球表面坡度图',
+            iconUrl: Cesium.buildModuleUrl('Widgets/Images/Image/Slop16ppd.png'),
+            tooltip: '月球表面坡度图',
+            creationFunction: function () {
+                return new Cesium.WebMapTileServiceImageryProvider({
+                    url: "https://trek.nasa.gov/tiles/Moon/EQ/LRO_LOLA_ClrSlope_Global_16ppd/1.0.0//{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
+                    layer: "LRO_LOLA_ClrSlope_Global_16ppd",
+                    style: "default",
+                    format: "image/png",
+                    tileMatrixSetID: "default028mm",
+                    maximumLevel: 6,
+                    tilingScheme: new Cesium.GeographicTilingScheme(),
+                    credit: new Cesium.Credit("LRO_LOLA_ClrSlope_Global_16ppd"),
+                });
+            }
+        });
+        providerViewModels.push(LRO_LOLA_ClrSlope_Global_16ppd);
+
+        //10.RO WAC Mosaic v2
+        var diviner_Clrc3_c7_hour_10_14 = new Cesium.ProviderViewModel({
+            name: '月球表面亮度温度',
+            iconUrl: Cesium.buildModuleUrl('Widgets/Images/Image/angryOrange2.png'),
+            tooltip: '愤怒的橘子',
+            creationFunction: function () {
+                return new Cesium.WebMapTileServiceImageryProvider({
+                    url: "https://trek.nasa.gov/tiles/Moon/EQ/diviner_Clrc3_c7_hour_10_14/1.0.0//{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
+                    layer: "diviner_Clrc3_c7_hour_10_14",
+                    style: "default",
+                    format: "image/png",
+                    tileMatrixSetID: "default028mm",
+                    maximumLevel: 6,
+                    tilingScheme: new Cesium.GeographicTilingScheme(),
+                    credit: new Cesium.Credit("diviner_Clrc3_c7_hour_10_14"),
+                });
+            }
+        });
+        providerViewModels.push(diviner_Clrc3_c7_hour_10_14);
+
+        //11.LRO Diviner Color Bolometric Brightness Min Temperature Anomalies, 0.5 ppd
+        var diviner_Clrtbol_min_anom = new Cesium.ProviderViewModel({
+            name: '最小亮度温度异常',
+            iconUrl: Cesium.buildModuleUrl('Widgets/Images/Image/lunar.png'),
+            tooltip: 'lunar',
+            creationFunction: function () {
+                return new Cesium.WebMapTileServiceImageryProvider({
+                    url: "https://trek.nasa.gov/tiles/Moon/EQ/diviner_Clrtbol_min_anom/1.0.0//{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
+                    layer: "diviner_Clrtbol_min_anom",
+                    style: "default",
+                    format: "image/png",
+                    tileMatrixSetID: "default028mm",
+                    maximumLevel: 6,
+                    tilingScheme: new Cesium.GeographicTilingScheme(),
+                    credit: new Cesium.Credit("diviner_Clrtbol_min_anom"),
+                });
+            }
+        });
+        providerViewModels.push(diviner_Clrtbol_min_anom);
+
+
+        // 初始化Viewer时，直接加载对应imageryProvider
+        var viewer = new Cesium.Viewer("cesiumContainer", {
+            animation: true,
+            imageryProviderViewModels: providerViewModels
+            
+
+        });
+
+
+        viewer.scene.moon.show = false;
+
+        //烟花
+        const scene = viewer.scene;
+        scene.debugShowFramesPerSecond = true;
+
+        Cesium.Math.setRandomNumberSeed(315);
+
+        const modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
+            Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883)
+        );
+        const emitterInitialLocation = new Cesium.Cartesian3(0.0, 0.0, 100.0);
+
+        let particleCanvas;
+
+        function getImage() {
+            if (!Cesium.defined(particleCanvas)) {
+                particleCanvas = document.createElement("canvas");
+                particleCanvas.width = 20;
+                particleCanvas.height = 20;
+                const context2D = particleCanvas.getContext("2d");
+                context2D.beginPath();
+                context2D.arc(8, 8, 8, 0, Cesium.Math.TWO_PI, true);
+                context2D.closePath();
+                context2D.fillStyle = "rgb(255, 255, 255)";
+                context2D.fill();
+            }
+            return particleCanvas;
+        }
+
+        const minimumExplosionSize = 30.0;
+        const maximumExplosionSize = 100.0;
+        const particlePixelSize = new Cesium.Cartesian2(7.0, 7.0);
+        const burstSize = 400.0;
+        const lifetime = 10.0;
+        const numberOfFireworks = 20.0;
+
+        const emitterModelMatrixScratch = new Cesium.Matrix4();
+
+        function createFirework(offset, color, bursts) {
+            const position = Cesium.Cartesian3.add(
+                emitterInitialLocation,
+                offset,
+                new Cesium.Cartesian3()
+            );
+            const emitterModelMatrix = Cesium.Matrix4.fromTranslation(
+                position,
+                emitterModelMatrixScratch
+            );
+            const particleToWorld = Cesium.Matrix4.multiply(
+                modelMatrix,
+                emitterModelMatrix,
+                new Cesium.Matrix4()
+            );
+            const worldToParticle = Cesium.Matrix4.inverseTransformation(
+                particleToWorld,
+                particleToWorld
+            );
+
+            const size = Cesium.Math.randomBetween(
+                minimumExplosionSize,
+                maximumExplosionSize
+            );
+            const particlePositionScratch = new Cesium.Cartesian3();
+            const force = function (particle) {
+                const position = Cesium.Matrix4.multiplyByPoint(
+                    worldToParticle,
+                    particle.position,
+                    particlePositionScratch
+                );
+                if (Cesium.Cartesian3.magnitudeSquared(position) >= size * size) {
+                    Cesium.Cartesian3.clone(
+                        Cesium.Cartesian3.ZERO,
+                        particle.velocity
+                    );
+                }
+            };
+
+            const normalSize =
+                (size - minimumExplosionSize) /
+                (maximumExplosionSize - minimumExplosionSize);
+            const minLife = 0.3;
+            const maxLife = 1.0;
+            const life = normalSize * (maxLife - minLife) + minLife;
+
+            scene.primitives.add(
+                new Cesium.ParticleSystem({
+                    image: getImage(),
+                    startColor: color,
+                    endColor: color.withAlpha(0.0),
+                    particleLife: life,
+                    speed: 100.0,
+                    imageSize: particlePixelSize,
+                    emissionRate: 0,
+                    emitter: new Cesium.SphereEmitter(20),
+                    bursts: bursts,
+                    lifetime: lifetime,
+                    updateCallback: force,
+                    modelMatrix: modelMatrix,
+                    emitterModelMatrix: emitterModelMatrix,
+                })
+            );
+        }
+
+        const xMin = -100.0;
+        const xMax = 100.0;
+        const yMin = -80.0;
+        const yMax = 100.0;
+        const zMin = -50.0;
+        const zMax = 50.0;
+
+        const colorOptions = [
+            {
+                minimumRed: 0.75,
+                green: 0.0,
+                minimumBlue: 0.8,
+                alpha: 1.0,
+            },
+            {
+                red: 0.0,
+                minimumGreen: 0.75,
+                minimumBlue: 0.8,
+                alpha: 1.0,
+            },
+            {
+                red: 0.0,
+                green: 0.0,
+                minimumBlue: 0.8,
+                alpha: 1.0,
+            },
+            {
+                minimumRed: 0.75,
+                minimumGreen: 0.75,
+                blue: 0.0,
+                alpha: 1.0,
+            },
+        ];
+
+        for (let i = 0; i < numberOfFireworks; ++i) {
+            const x = Cesium.Math.randomBetween(xMin, xMax);
+            const y = Cesium.Math.randomBetween(yMin, yMax);
+            const z = Cesium.Math.randomBetween(zMin, zMax);
+            const offset = new Cesium.Cartesian3(x, y, z);
+            const color = Cesium.Color.fromRandom(
+                colorOptions[i % colorOptions.length]
+            );
+
+            const bursts = [];
+            for (let j = 0; j < 3; ++j) {
+                bursts.push(
+                    new Cesium.ParticleBurst({
+                        time: Cesium.Math.nextRandomNumber() * lifetime,
+                        minimum: burstSize,
+                        maximum: burstSize,
+                    })
+                );
+            }
+
+            createFirework(offset, color, bursts);
+        }
+
+        const camera = viewer.scene.camera;
+        const cameraOffset = new Cesium.Cartesian3(-300.0, 0.0, 0.0);
+        camera.lookAtTransform(modelMatrix, cameraOffset);
+        camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+
+        const toFireworks = Cesium.Cartesian3.subtract(
+            emitterInitialLocation,
+            cameraOffset,
+            new Cesium.Cartesian3()
+        );
+        Cesium.Cartesian3.normalize(toFireworks, toFireworks);
+        const angle =
+            Cesium.Math.PI_OVER_TWO -
+            Math.acos(
+                Cesium.Cartesian3.dot(toFireworks, Cesium.Cartesian3.UNIT_Z)
+            );
+        camera.lookUp(angle);
+
+
+
+
+
+
+    </script>
+</body>
+</html>
